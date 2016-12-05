@@ -5,10 +5,10 @@ package com.example.user.a20161202_test4.data;
  */
 
 public class Student {
-    int ID;
-    String name;
-    String tel;
-    String addr;
+    public int ID;
+    public String name;
+    public String tel;
+    public String addr;
 
     public Student(int i, String n, String t, String a)
     {
