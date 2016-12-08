@@ -1,5 +1,11 @@
 package com.example.user.a20161202_test4.data;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,21 +13,44 @@ import java.util.List;
  */
 
 public class StudentDAODBImpl implements StudentDAO {
+    SQLiteDatabase db;
+    MyDBHelper helper;
+
+    public StudentDAODBImpl(Context context)
+    {
+        helper = new MyDBHelper(context);
+        db = helper.getWritableDatabase();
+    }
+
     @Override
     public List<Student> getList() {
-        return null;
+        ArrayList<Student> mylist = new ArrayList<>();
+        Cursor c = db.query("phone", new String[] {"ID", "SName", "tel", "addr"}, null,null,null,null,null);
+        if (c.moveToFirst())
+        {
+            mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+        }
+        while (c.moveToNext())
+        {
+            mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+        }
+
+        return mylist;
     }
 
     @Override
     public void add(Student s) {
-
+        ContentValues cv = new ContentValues();
+        cv.put("SName", s.name);
+        cv.put("tel", s.tel);
+        cv.put("addr", s.addr);
+        db.insert("phone", null, cv);
     }
 
     @Override
     public Student getItem(int ID) {
         return null;
     }
-
     @Override
     public void delete(int ID) {
 
