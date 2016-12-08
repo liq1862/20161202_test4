@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import com.example.user.a20161202_test4.data.Student;
 import com.example.user.a20161202_test4.data.StudentDAO;
 import com.example.user.a20161202_test4.data.StudentDAODBImpl;
+import com.example.user.a20161202_test4.data.StudentDAOFactory;
 import com.example.user.a20161202_test4.data.StudentDAOFileImpl;
 import com.example.user.a20161202_test4.data.StudentDAOMemoryImpl;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.listView);
         data = new ArrayList<>();
         app = (MyApplication) getApplication();
-        app.dao = new StudentDAODBImpl(MainActivity.this);
+        app.dao = StudentDAOFactory.getStudentDAO(MainActivity.this, 2);
         adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, data);
         lv.setAdapter(adapter);
@@ -77,4 +78,3 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
